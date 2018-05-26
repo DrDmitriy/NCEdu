@@ -1,4 +1,4 @@
-package ru.ncedu.DmDrozhzhin;
+package ru.ncedu.DmDrozhzhin.quickSort;
 import java.util.Random;
 
 public class QuickSort {
