@@ -52,6 +52,10 @@ public class FileExplorer {
     }
 
     public void copyFiles(String soursePath, String destinationPath) {
+        if (soursePath == null|| soursePath.equals("")||destinationPath == null || destinationPath.equals("")) {
+            System.out.println("Укажите корректный путь для метода copyFile");
+            return;
+        }
         Path source = Paths.get(soursePath);
         Path destination = Paths.get(destinationPath);
 
@@ -73,6 +77,10 @@ public class FileExplorer {
 
 
     public void moveFiles(String soursePath, String destinationPath) {
+        if (soursePath == null || soursePath.equals("") || destinationPath == null || destinationPath.equals("")) {
+            System.out.println("Укажите корректный путь для метода moveFile");
+            return;
+        }
         Path source = Paths.get(soursePath);
         Path destination = Paths.get(destinationPath);
         if (!new File(soursePath).isDirectory()) {
