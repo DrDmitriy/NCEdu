@@ -1,45 +1,67 @@
 package ru.ncedu.Dmdrozhzhin;
+
 import java.lang.reflect.Modifier;
 
+/**
+ * check different modificator and return string representation
+ */
 public class ReflectionModifier {
 
-    private String getModAccess(int modif){
+    public String getModAccess(int modif) {
         if (Modifier.isPublic(modif)) {
             return "public ";
-        }
-        else if (Modifier.isProtected(modif)) {
+        } else if (Modifier.isProtected(modif)) {
             return "ptotected ";
-        }
-        else if (Modifier.isPrivate(modif)) {
+        } else if (Modifier.isPrivate(modif)) {
             return "private ";
-        }
-        else {
+        } else {
             return "";
         }
     }
 
-    private String isStaticString(int modif) {
-        if(Modifier.isStatic(modif)) {
+    public String isStaticString(int modif) {
+        if (Modifier.isStatic(modif)) {
             return "static ";
-        }
-        else {
+        } else {
             return "";
         }
     }
-    private String isFinalString(int modif) {
-        if(Modifier.isFinal(modif)) {
+
+    public String isFinalString(int modif) {
+        if (Modifier.isFinal(modif)) {
             return "final ";
-        }
-        else {
+        } else {
             return "";
         }
     }
 
-    private String isAbstarctString(int modif) {
-        if(Modifier.isAbstract(modif)) {
+    public String isAbstarctString(int modif) {
+        if (Modifier.isAbstract(modif)) {
             return "abstract ";
-        }
-        else return "";
+        } else return "";
     }
 
+    public String isTransient(int modif) {
+        if (Modifier.isTransient(modif)) {
+            return "transient";
+        } else {
+            return "";
+        }
+    }
+
+    public String isVolatile(int modif) {
+        if (Modifier.isVolatile(modif)) {
+            return "volatile";
+        } else {
+            return "";
+        }
+    }
+
+    public String isNative(int modif) {
+        if (Modifier.isNative(modif)) {
+            return "native";
+        } else {
+            return "";
+        }
+    }
 }
