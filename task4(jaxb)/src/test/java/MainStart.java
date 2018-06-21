@@ -11,10 +11,11 @@ public class MainStart {
     }
 
     public void jaxbStart(String filename) {
+        JabxImpl jabx = new JabxImpl();
         Customers customers1 = GenerateCustomer.generateCustomer();
 
-        convertObjectToXml(customers1, filename);
-        Customers customer = fromXmlToObject(filename);
+        jabx.convertObjectToXml(customers1, filename);
+        Customers customer = jabx.fromXmlToObject(filename);
 
         if (customer != null) {
             System.out.println(customer.toString());
@@ -25,28 +26,5 @@ public class MainStart {
                 }
             }
         }
-    }
-
-    private void convertObjectToXml(Customers customers, String filename) {
-        try {
-            JAXBContext context = JAXBContext.newInstance(Customers.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(customers, new File(filename));
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static Customers fromXmlToObject(String filePath) {
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Customers.class);
-            Unmarshaller un = jaxbContext.createUnmarshaller();
-
-            return (Customers) un.unmarshal(new File(filePath));
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
