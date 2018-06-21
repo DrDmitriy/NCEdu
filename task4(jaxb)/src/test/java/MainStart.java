@@ -11,16 +11,7 @@ public class MainStart {
     }
 
     public void jaxbStart(String filename) {
-        Customers customers1 = new Customers(1, "customer1", "Moscow Red Square", "8-915-123-34-53");
-        Orders order = new Orders(1, 1000, customers1);
-        Manufactures manufactures = new Manufactures(1, "manufacture1", "Russia",
-                "Moscow,Tverskaya streer", "8-800-888-11-22");
-        Products products = new Products(1, manufactures, "prod1", 100, "category1",
-                true, "20.06.2018", "10x10");
-
-
-        order.addToProductIdList(products);
-        customers1.addToOrdersList(order);
+        Customers customers1 = GenerateCustomer.generateCustomer();
 
         convertObjectToXml(customers1, filename);
         Customers customer = fromXmlToObject(filename);
