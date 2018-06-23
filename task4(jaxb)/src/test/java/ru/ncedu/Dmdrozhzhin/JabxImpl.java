@@ -1,4 +1,7 @@
-import table.Customers;
+package ru.ncedu.Dmdrozhzhin;
+
+import ru.ncedu.Dmdrozhzhin.table.Customers;
+
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

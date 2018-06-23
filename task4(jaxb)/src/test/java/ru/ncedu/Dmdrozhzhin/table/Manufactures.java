@@ -1,4 +1,4 @@
-package table;
+package ru.ncedu.Dmdrozhzhin.table;
 
 import java.util.ArrayList;
 import java.util.List;

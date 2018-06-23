@@ -1,8 +1,10 @@
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-import table.Customers;
-import table.Manufactures;
-import table.Orders;
-import table.Products;
+package ru.ncedu.Dmdrozhzhin;
+
+import ru.ncedu.Dmdrozhzhin.table.Customers;
+import ru.ncedu.Dmdrozhzhin.table.Manufactures;
+import ru.ncedu.Dmdrozhzhin.table.Orders;
+import ru.ncedu.Dmdrozhzhin.table.Products;
+
 
 public class GenerateCustomer {
     private static int customer_id = 1;

@@ -1,4 +1,4 @@
-package table;
+package ru.ncedu.Dmdrozhzhin.table;
 
 public class Products {
 

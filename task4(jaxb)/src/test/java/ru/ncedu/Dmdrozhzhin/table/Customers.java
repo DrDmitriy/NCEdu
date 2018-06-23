@@ -1,4 +1,6 @@
-package table;
+package ru.ncedu.Dmdrozhzhin.table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -13,6 +15,7 @@ public class Customers {
     private String name;
     private String address;
     private String phone_number;
+    @JsonIgnore
     private List<Orders> ordersList = new ArrayList<Orders>();
 
     public Customers() {
