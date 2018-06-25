@@ -1,4 +1,4 @@
-package dmdrozhzhin.pingPong;
+package ru.ncedu.dmdrozhzhin.pingPong;
 
 public class PingPongStart {
     public static void main(String[] args) {

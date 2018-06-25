@@ -1,4 +1,4 @@
-package dmdrozhzhin.pingPong;
+package ru.ncedu.dmdrozhzhin.pingPong;
 
 public class Ping implements Runnable {
     Object pingFlag;
