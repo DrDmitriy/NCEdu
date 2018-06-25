@@ -1,35 +1,42 @@
 package dmdrozhzhin.pingPong;
 
-public class Pong implements Runnable{
-   PingPongCommon pongFlag;
-    public Pong(PingPongCommon pongFlag) {
+public class Pong implements Runnable {
+    Object pongFlag;
+
+    public Pong(Object pongFlag) {
         this.pongFlag = pongFlag;
     }
-    public synchronized void pong() {
+
+    public void pong() {
         while (true) {
+            synchronized (pongFlag) {
+        /*while (true) {
             System.out.println("Старт PONG flag = " + pongFlag.getFlag());
-
-           // while (!pongFlag.getFlag()) {
-            while (!pongFlag.getFlag()) {
-                // System.out.println(pongFlag.getFlag());
-
+*/
+                // while (!pongFlag.getFlag()) {
+          /*  while (!pongFlag.getFlag()) {
+                // System.out.println(pongFlag.getFlag());*/
+                System.out.println("pong");
                 try {
-                   pongFlag.wait();
+                    pongFlag.notifyAll();
+                    pongFlag.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
             }
-
-
-            System.out.println("pong");
-            //Main.flag = false;
-            pongFlag.notifyAll();
-            pongFlag.setFlag(false);
-
         }
-        //}
-
     }
+
+
+    //Main.flag = false;
+
+    // pongFlag.setFlag(false);
+
+    //}
+    //}
+
+
 
 
 
@@ -49,8 +56,8 @@ public class Pong implements Runnable{
 
     public void run() {
 
-            System.out.println("run - PONG");
-            pong();
+        System.out.println("run - PONG");
+        pong();
 
 
     }
