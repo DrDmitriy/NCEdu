@@ -1,33 +1,34 @@
-package ru.ncedu.Dmdrozhzhin.table;
+package ru.ncedu.dmdrozhzhin.xmlSerealization.table;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Manufactures {
-    private int manufacturer_id;
+    private int manufacturerId;
     private String name;
     private String country;
 
-    public Manufactures(int manufacturer_id, String name, String country, String address, String phone_number) {
-        this.manufacturer_id = manufacturer_id;
+    public Manufactures(int manufacturerId, String name, String country, String address, String phoneNumber) {
+        this.manufacturerId = manufacturerId;
         this.name = name;
         this.country = country;
         this.address = address;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
     }
 
     private String address;
-    private String phone_number;
+    private String phoneNumber;
     private List<Products> productsList = new ArrayList();
 
     public Manufactures() {
     }
-    public int getManufacturer_id() {
-        return manufacturer_id;
+
+    public int getmanufacturerId() {
+        return manufacturerId;
     }
 
-    public void setManufacturer_id(int manufacturer_id) {
-        this.manufacturer_id = manufacturer_id;
+    public void setmanufacturerId(int manufacturerId) {
+        this.manufacturerId = manufacturerId;
     }
 
     public String getName() {
@@ -54,12 +55,12 @@ public class Manufactures {
         this.address = address;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getphoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setphoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public List<Products> getProductsList() {
@@ -73,11 +74,11 @@ public class Manufactures {
     @Override
     public String toString() {
         return "Manufactures{" +
-                "manufacturer_id=" + manufacturer_id +
+                "manufacturerId=" + manufacturerId +
                 ", name='" + name + '\'' +
                 ", country='" + country + '\'' +
                 ", address='" + address + '\'' +
-                ", phone_number='" + phone_number + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", productsList=" + productsList +
                 '}';
     }

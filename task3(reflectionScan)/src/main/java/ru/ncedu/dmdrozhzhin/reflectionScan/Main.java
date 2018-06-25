@@ -1,4 +1,4 @@
-package ru.ncedu.Dmdrozhzhin;
+package ru.ncedu.dmdrozhzhin.reflectionScan;
 
 public class Main {
     public static void main(String[] args) {
@@ -6,10 +6,11 @@ public class Main {
     }
 
     public static void printClass(Class clazz) {
+
         PrintReflectionClass printer = new PrintReflectionClass(clazz);
         printer.printPackage();
         System.out.println("");
-        printer.printImportedClass(".\\src\\main\\java\\ru\\ncedu\\Dmdrozhzhin\\TestClass.java");
+        printer.printImportedClass(".\\src\\main\\java\\ru\\ncedu\\dmdrozhzhin\\reflectionScan\\TestClass.java");
         System.out.println();
         printer.printClassAnnotation();
         printer.printClassName();

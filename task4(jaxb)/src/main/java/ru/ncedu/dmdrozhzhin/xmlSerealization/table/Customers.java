@@ -1,4 +1,4 @@
-package ru.ncedu.Dmdrozhzhin.table;
+package ru.ncedu.dmdrozhzhin.xmlSerealization.table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -11,21 +11,21 @@ import java.util.List;
 @XmlRootElement
 public class Customers {
 
-    private int customer_id;
+    private int customerId;
     private String name;
     private String address;
-    private String phone_number;
+    private String phoneNumber;
     @JsonIgnore
     private List<Orders> ordersList = new ArrayList<Orders>();
 
     public Customers() {
     }
 
-    public Customers(int customer_id, String name, String address, String phone_number) {
-        this.customer_id = customer_id;
+    public Customers(int customerId, String name, String address, String phoneNumber) {
+        this.customerId = customerId;
         this.name = name;
         this.address = address;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
     }
 
     @XmlElementWrapper
@@ -38,12 +38,12 @@ public class Customers {
         this.ordersList.add(order);
     }
 
-    public int getCustomer_id() {
-        return customer_id;
+    public int getcustomerId() {
+        return customerId;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public void setcustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {
@@ -62,21 +62,21 @@ public class Customers {
         this.address = address;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getphoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setphoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
     public String toString() {
         return "Customers{" +
-                "customer_id=" + customer_id +
+                "customerId=" + customerId +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
-                ", phone_number='" + phone_number + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 }

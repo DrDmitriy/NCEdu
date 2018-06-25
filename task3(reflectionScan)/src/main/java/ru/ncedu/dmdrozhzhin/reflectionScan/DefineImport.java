@@ -1,4 +1,4 @@
-package ru.ncedu.Dmdrozhzhin;
+package ru.ncedu.dmdrozhzhin.reflectionScan;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaSource;

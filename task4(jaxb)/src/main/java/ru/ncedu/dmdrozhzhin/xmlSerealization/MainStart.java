@@ -1,11 +1,14 @@
-package ru.ncedu.Dmdrozhzhin;
-import ru.ncedu.Dmdrozhzhin.table.*;
+package ru.ncedu.dmdrozhzhin.xmlSerealization;
 
+import ru.ncedu.dmdrozhzhin.xmlSerealization.table.Customers;
+import ru.ncedu.dmdrozhzhin.xmlSerealization.table.Orders;
+import ru.ncedu.dmdrozhzhin.xmlSerealization.table.Products;
+//SDK version 1.7
 public class MainStart {
     public static void main(String[] args) {
        new MainStart().jaxbStart(".\\jaxb.xml");
-        JacksonImpl.writeValue();
-        JacksonImpl.readValue();
+       JacksonImpl.writeValue();
+       JacksonImpl.readValue();
     }
 
     public void jaxbStart(String filename) {

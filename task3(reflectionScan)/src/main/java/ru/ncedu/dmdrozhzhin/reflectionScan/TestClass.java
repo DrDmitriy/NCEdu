@@ -1,11 +1,8 @@
-package ru.ncedu.Dmdrozhzhin;
+package ru.ncedu.dmdrozhzhin.reflectionScan;
 
-import javax.swing.text.html.HTMLDocument;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.Iterator;
 import java.util.List;
 
 @myAnn

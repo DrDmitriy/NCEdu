@@ -1,7 +1,8 @@
-package ru.ncedu.Dmdrozhzhin;
+package ru.ncedu.dmdrozhzhin.xmlSerealization;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import ru.ncedu.Dmdrozhzhin.table.Customers;
+import ru.ncedu.dmdrozhzhin.xmlSerealization.table.Customers;
+
 
 import java.io.File;
 import java.io.FileInputStream;

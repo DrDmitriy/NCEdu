@@ -1,8 +1,6 @@
-package ru.ncedu.Dmdrozhzhin;
+package ru.ncedu.dmdrozhzhin.xmlSerealization;
 
-import ru.ncedu.Dmdrozhzhin.table.Customers;
-
-
+import ru.ncedu.dmdrozhzhin.xmlSerealization.table.Customers;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;

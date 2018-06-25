@@ -1,15 +1,14 @@
-package ru.ncedu.Dmdrozhzhin.table;
+package ru.ncedu.dmdrozhzhin.xmlSerealization.table;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Orders {
-    private int order_id;
+    private int orderId;
     @XmlElementWrapper
     @XmlElement(name = "product")
     private List<Products> productIdList = new ArrayList<Products>();
@@ -17,8 +16,8 @@ public class Orders {
     @XmlTransient
     private Customers customer;
 
-    public Orders(int order_id, int price, Customers customer) {
-        this.order_id = order_id;
+    public Orders(int orderId, int price, Customers customer) {
+        this.orderId = orderId;
         this.price = price;
         this.customer = customer;
     }
@@ -35,12 +34,12 @@ public class Orders {
         this.customer = customer;
     }
 
-    public int getOrder_id() {
-        return order_id;
+    public int getorderId() {
+        return orderId;
     }
 
-    public void setOrder_id(int order_id) {
-        this.order_id = order_id;
+    public void setorderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public List<Products> getProductIdList() {
@@ -62,7 +61,7 @@ public class Orders {
     @Override
     public String toString() {
         return "Orders{" +
-                "order_id=" + order_id +
+                "orderId=" + orderId +
                 ", productIdList=" + productIdList +
                 ", price=" + price +
                 ", customer=" + customer +

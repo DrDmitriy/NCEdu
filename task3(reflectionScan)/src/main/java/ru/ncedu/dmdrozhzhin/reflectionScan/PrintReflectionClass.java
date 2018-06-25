@@ -1,5 +1,4 @@
-package ru.ncedu.Dmdrozhzhin;
-
+package ru.ncedu.dmdrozhzhin.reflectionScan;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

@@ -1,13 +1,13 @@
-package ru.ncedu.Dmdrozhzhin.table;
+package ru.ncedu.dmdrozhzhin.xmlSerealization.table;
 
 public class Products {
 
-    private int product_id;
+    private int productId;
     Manufactures manufacture;
     private String name;
     private double price;
     private String category;
-    private boolean is_available;
+    private boolean isAvailable;
     private String date;
     private String size;
 
@@ -19,12 +19,12 @@ public class Products {
         this.manufacture = manufactures;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getproductId() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setproductId(int productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -51,12 +51,12 @@ public class Products {
         this.category = category;
     }
 
-    public boolean isIs_available() {
-        return is_available;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
-    public void setIs_available(boolean is_available) {
-        this.is_available = is_available;
+    public void setisAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public String getDate() {
@@ -75,13 +75,13 @@ public class Products {
         this.size = size;
     }
 
-    public Products(int product_id, Manufactures manufacture, String name, double price, String category, boolean is_available, String date, String size) {
-        this.product_id = product_id;
+    public Products(int productId, Manufactures manufacture, String name, double price, String category, boolean isAvailable, String date, String size) {
+        this.productId = productId;
         this.manufacture = manufacture;
         this.name = name;
         this.price = price;
         this.category = category;
-        this.is_available = is_available;
+        this.isAvailable = isAvailable;
         this.date = date;
         this.size = size;
     }
@@ -92,12 +92,12 @@ public class Products {
     @Override
     public String toString() {
         return "Products{" +
-                "product_id=" + product_id +
+                "productId=" + productId +
                 ", manufacture_id=" + manufacture +
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", category='" + category + '\'' +
-                ", is_available=" + is_available +
+                ", isAvailable=" + isAvailable +
                 ", date='" + date + '\'' +
                 ", size='" + size + '\'' +
                 '}';

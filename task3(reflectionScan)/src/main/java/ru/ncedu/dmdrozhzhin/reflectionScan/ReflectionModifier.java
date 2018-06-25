@@ -1,4 +1,4 @@
-package ru.ncedu.Dmdrozhzhin;
+package ru.ncedu.dmdrozhzhin.reflectionScan;
 
 import java.lang.reflect.Modifier;
 
