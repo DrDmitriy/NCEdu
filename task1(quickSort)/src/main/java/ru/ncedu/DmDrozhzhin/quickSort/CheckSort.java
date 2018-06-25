@@ -1,4 +1,4 @@
-package ru.ncedu.DmDrozhzhin.quickSort;
+package ru.ncedu.dmdrozhzhin.quicksort;
 
 public class CheckSort {
     public static <T extends Comparable> boolean isCorrectSort(T[] arr) {

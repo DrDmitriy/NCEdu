@@ -1,4 +1,4 @@
-package ru.ncedu.DmDrozhzhin.quickSort;
+package ru.ncedu.dmdrozhzhin.quicksort;
 
 public class QuickSort {
     public static <T extends Comparable> void comSort(T[] array) {

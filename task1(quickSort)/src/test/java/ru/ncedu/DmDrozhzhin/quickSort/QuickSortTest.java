@@ -1,4 +1,4 @@
-package ru.ncedu.DmDrozhzhin.quickSort;
+package ru.ncedu.dmdrozhzhin.quicksort;
 
 import static org.junit.jupiter.api.Assertions.*;
 

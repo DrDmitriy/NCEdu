@@ -1,6 +1,4 @@
-package ru.ncedu.DmDrozhzhin.quickSort;
-
-import java.util.Arrays;
+package ru.ncedu.dmdrozhzhin.quicksort;
 
 public class Main {
     public static void main(String[] args) { }

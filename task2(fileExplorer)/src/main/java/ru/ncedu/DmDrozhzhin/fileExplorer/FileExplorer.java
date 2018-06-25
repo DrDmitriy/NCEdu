@@ -1,4 +1,4 @@
-package ru.ncedu.DmDrozhzhin.fileExplorer;
+package ru.ncedu.dmdrozhzhin.fileexplorer;
 
 import java.io.File;
 import java.io.IOException;
