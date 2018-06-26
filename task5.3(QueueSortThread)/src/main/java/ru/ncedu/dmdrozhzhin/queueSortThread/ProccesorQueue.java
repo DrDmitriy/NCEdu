@@ -2,6 +2,9 @@ package ru.ncedu.dmdrozhzhin.queueSortThread;
 
 import ru.ncedu.dmdrozhzhin.quicksort.QuickSort;
 
+import java.io.File;
+import java.util.Arrays;
+
 public class ProccesorQueue implements Runnable {
     QueueArray queueArray;
 
@@ -33,9 +36,12 @@ public class ProccesorQueue implements Runnable {
 
             }
         }
-        if(nextArray != null) {
+
+        if (nextArray != null) {
             QuickSort.comSort(nextArray);
         }
+        
+
     }
 
     public void run() {

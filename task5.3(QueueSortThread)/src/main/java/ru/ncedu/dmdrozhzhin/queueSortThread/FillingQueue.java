@@ -4,10 +4,12 @@ import ru.ncedu.dmdrozhzhin.quicksort.GenerateRandomArray;
 
 public class FillingQueue implements Runnable {
     static int i = 1;
-    QueueArray queueArray;
+    private QueueArray queueArray;
+    private int capasity;
 
-    FillingQueue(QueueArray queueArray) {
+    FillingQueue(QueueArray queueArray, int capasity) {
         this.queueArray = queueArray;
+        this.capasity = capasity;
     }
 
     /*  public void addArray(){
@@ -28,7 +30,7 @@ public class FillingQueue implements Runnable {
                 e.printStackTrace();
             }*/
             int masSize = queueArray.getQueueIntegerMas().size();
-            if (masSize < 1000) {
+            if (masSize < capasity) {
                 System.out.println(i + " Добавляю массив в очередь     ");
 
                 i++;

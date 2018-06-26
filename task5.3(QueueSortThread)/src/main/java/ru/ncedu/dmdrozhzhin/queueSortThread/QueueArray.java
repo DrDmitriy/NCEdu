@@ -19,9 +19,9 @@ public class QueueArray {
         queueIntegerMas.add(array);
     }
 
-    public Iterator<Integer[]> getIterator (){
+  /*  public Iterator<Integer[]> getIterator (){
         return queueIntegerMas.iterator();
-    }
+    }*/
 
     public Integer[] getNextArray(){
 

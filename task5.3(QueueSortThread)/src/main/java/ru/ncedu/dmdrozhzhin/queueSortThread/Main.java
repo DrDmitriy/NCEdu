@@ -7,15 +7,23 @@ import java.io.File;
 import java.util.*;
 
 public class Main {
+    //static int countThread= 1;
     static QueueArray queueArray;
     public static void main(String[] args) {
-        Integer[] integerAraay = GenerateRandomArray.genIntegerRandomArr(10000);
-        QuickSort.comSort(integerAraay);
+        /*Integer[] integerAraay = GenerateRandomArray.genIntegerRandomArr(10000);
+        QuickSort.comSort(integerAraay)*/;
         queueArray = new QueueArray();
-        FillingQueue fillingQueue = new FillingQueue(queueArray);
+        FillingQueue fillingQueue = new FillingQueue(queueArray,Integer.valueOf(args[1]));
         Thread fiilingThread = new Thread(fillingQueue);
+        fiilingThread.start();
 
-        ProccesorQueue proccesorQueue1 = new ProccesorQueue(queueArray);
+        for(int i = 1; i < Integer.valueOf(args[0]);i++){
+            Thread processorThread = new Thread(new ProccesorQueue(queueArray));
+            processorThread.setName("Обработчик "+ i);
+            processorThread.start();
+        }
+
+    /*    ProccesorQueue proccesorQueue1 = new ProccesorQueue(queueArray);
         Thread proccesorThread1 = new Thread(proccesorQueue1);
         proccesorThread1.setName("Обработчик 1");
 
@@ -31,13 +39,11 @@ public class Main {
         Thread proccesorThread4 = new Thread(proccesorQueue4);
         proccesorThread4.setName("Обработчик 4");
 
-
-        fiilingThread.start();
         proccesorThread1.start();
         proccesorThread2.start();
         proccesorThread3.start();
         proccesorThread4.start();
-
+*/
 
 
 
