@@ -27,11 +27,11 @@ public class FillingQueue implements Runnable {
                 System.out.println(i + " Добавляю массив в очередь     ");
 
                 i++;
-               try {
-                    Thread.sleep(1000);
+              /* try {
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
                 queueArray.addQueue(arrToAdd);
                 queueArray.notify();
                 System.out.println("   Текущий размер очереди "+ queueArray.getQueueIntegerMas().size());
@@ -53,6 +53,7 @@ public class FillingQueue implements Runnable {
 
     public void run() {
         while (true) {
+            System.out.println("RUN FILLING");
             generateArrays();
         }
     }
