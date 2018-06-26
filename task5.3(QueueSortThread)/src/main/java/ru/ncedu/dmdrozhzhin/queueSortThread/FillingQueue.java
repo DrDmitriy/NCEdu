@@ -27,13 +27,21 @@ public class FillingQueue implements Runnable {
                 System.out.println(i + " Добавляю массив в очередь     ");
 
                 i++;
+               try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 queueArray.addQueue(arrToAdd);
+                queueArray.notify();
                 System.out.println("   Текущий размер очереди "+ queueArray.getQueueIntegerMas().size());
             } else {
                 System.out.println("Вызываю метод wait in addInQueue ");
                 try {
+
                     queueArray.wait();
-                    queueArray.notify();
+
+
                     addInQueue(arrToAdd);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

@@ -21,7 +21,7 @@ public class Main {
         }
 
         int n = 0;
-        while (n < 20) {
+        while (true) {
             synchronized (queueArray) {
                 //System.out.println( "size before " + queueArray.getQueueIntegerMas().size());
                 if (queueArray.getQueueIntegerMas().size() < 5) {
@@ -31,6 +31,11 @@ public class Main {
                         e.printStackTrace();
                     }
                 } else {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     queueArray.getNextArray();
                 }
             }
