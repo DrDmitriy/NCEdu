@@ -24,7 +24,7 @@ public class Main {
         while (true) {
             synchronized (queueArray) {
                 //System.out.println( "size before " + queueArray.getQueueIntegerMas().size());
-                if (queueArray.getQueueIntegerMas().size() < 5) {
+                if (queueArray.getQueueIntegerMas().size() < 1) {
                     try {
                         queueArray.wait();
                     } catch (InterruptedException e) {
@@ -45,5 +45,8 @@ public class Main {
         }
 
 
+    }
+    public void processNextArray(){
+        
     }
 }
