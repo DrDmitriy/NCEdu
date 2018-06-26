@@ -19,11 +19,7 @@ public class ProccesorQueue implements Runnable {
             }*/
             System.out.println(Thread.currentThread().getName() + "  заблоктровал queueArray ");
             if (queueArray.getQueueIntegerMas().size() > 0) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+               
                 nextArray = queueArray.getNextArray();
 
 
