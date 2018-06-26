@@ -15,15 +15,20 @@ public class FillingQueue implements Runnable {
       }
   */
     private void generateArrays() {
-        Integer[] integerMas = GenerateRandomArray.genIntegerRandomArr(30);
+        Integer[] integerMas = GenerateRandomArray.genIntegerRandomArr(1000);
         addInQueue(integerMas);
 
     }
 
     private void addInQueue(Integer[] arrToAdd) {
         synchronized ( queueArray) {
+          /*  try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
             int masSize = queueArray.getQueueIntegerMas().size();
-            if (masSize < 10) {
+            if (masSize < 1000) {
                 System.out.println(i + " Добавляю массив в очередь     ");
 
                 i++;
@@ -33,7 +38,7 @@ public class FillingQueue implements Runnable {
                     e.printStackTrace();
                 }*/
                 queueArray.addQueue(arrToAdd);
-                queueArray.notify();
+                queueArray.notifyAll();
                 System.out.println("   Текущий размер очереди "+ queueArray.getQueueIntegerMas().size());
             } else {
                 System.out.println("Вызываю метод wait in addInQueue ");

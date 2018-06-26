@@ -9,7 +9,7 @@ import java.util.*;
 public class Main {
     static QueueArray queueArray;
     public static void main(String[] args) {
-        Integer[] integerAraay = GenerateRandomArray.genIntegerRandomArr(10);
+        Integer[] integerAraay = GenerateRandomArray.genIntegerRandomArr(10000);
         QuickSort.comSort(integerAraay);
         queueArray = new QueueArray();
         FillingQueue fillingQueue = new FillingQueue(queueArray);
@@ -17,11 +17,26 @@ public class Main {
 
         ProccesorQueue proccesorQueue1 = new ProccesorQueue(queueArray);
         Thread proccesorThread1 = new Thread(proccesorQueue1);
+        proccesorThread1.setName("Обработчик 1");
 
+        ProccesorQueue proccesorQueue2 = new ProccesorQueue(queueArray);
+        Thread proccesorThread2 = new Thread(proccesorQueue2);
+        proccesorThread2.setName("Обработчик 2");
+
+        ProccesorQueue proccesorQueue3 = new ProccesorQueue(queueArray);
+        Thread proccesorThread3 = new Thread(proccesorQueue3);
+        proccesorThread3.setName("Обработчик 3");
+
+        ProccesorQueue proccesorQueue4 = new ProccesorQueue(queueArray);
+        Thread proccesorThread4 = new Thread(proccesorQueue4);
+        proccesorThread4.setName("Обработчик 4");
 
 
         fiilingThread.start();
         proccesorThread1.start();
+        proccesorThread2.start();
+        proccesorThread3.start();
+        proccesorThread4.start();
 
 
 

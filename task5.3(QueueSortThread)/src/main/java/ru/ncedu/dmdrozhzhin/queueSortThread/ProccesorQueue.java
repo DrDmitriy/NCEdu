@@ -1,22 +1,31 @@
 package ru.ncedu.dmdrozhzhin.queueSortThread;
 
-public class ProccesorQueue implements Runnable{
+import ru.ncedu.dmdrozhzhin.quicksort.QuickSort;
+
+public class ProccesorQueue implements Runnable {
     QueueArray queueArray;
 
     public ProccesorQueue(QueueArray queueArray) {
         this.queueArray = queueArray;
     }
 
-    public void processNextArray(){
-        synchronized (queueArray){
-            System.out.println("Обработчик заблоктровал queueArray ");
+    public void processNextArray() {
+        Integer[] nextArray = null;
+        synchronized (queueArray) {
+          /*  try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
+            System.out.println(Thread.currentThread().getName() + "  заблоктровал queueArray ");
             if (queueArray.getQueueIntegerMas().size() > 0) {
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                queueArray.getNextArray();
+                nextArray = queueArray.getNextArray();
+
 
             } else {
                 try {
@@ -28,10 +37,13 @@ public class ProccesorQueue implements Runnable{
 
             }
         }
+        if(nextArray != null) {
+            QuickSort.comSort(nextArray);
+        }
     }
 
     public void run() {
-        while (true){
+        while (true) {
             processNextArray();
         }
     }
