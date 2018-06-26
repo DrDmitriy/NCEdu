@@ -3,7 +3,7 @@ package ru.ncedu.dmdrozhzhin.queueSortThread;
 import ru.ncedu.dmdrozhzhin.quicksort.GenerateRandomArray;
 
 public class FillingQueue implements Runnable {
-    static int i = 1;
+    private static int countAddOperation = 1;
     private QueueArray queueArray;
     private int capasity;
 
@@ -12,48 +12,29 @@ public class FillingQueue implements Runnable {
         this.capasity = capasity;
     }
 
-    /*  public void addArray(){
-          generateArrays();
-      }
-  */
     private void generateArrays() {
-        Integer[] integerMas = GenerateRandomArray.genIntegerRandomArr(1000);
+        Integer[] integerMas = GenerateRandomArray.genIntegerRandomArr(100000);
         addInQueue(integerMas);
 
     }
 
     private void addInQueue(Integer[] arrToAdd) {
-        synchronized ( queueArray) {
-          /*  try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
+        synchronized (queueArray) {
             int masSize = queueArray.getQueueIntegerMas().size();
             if (masSize < capasity) {
-                System.out.println(i + " Добавляю массив в очередь     ");
+                countAddOperation++;
 
-                i++;
-              /* try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
                 queueArray.addQueue(arrToAdd);
                 queueArray.notifyAll();
-                System.out.println("   Текущий размер очереди "+ queueArray.getQueueIntegerMas().size());
+                System.out.println(" Текущий размер очереди " + queueArray.getQueueIntegerMas().size());
             } else {
                 System.out.println("Вызываю метод wait in addInQueue ");
                 try {
-
                     queueArray.wait();
-
-
-                    addInQueue(arrToAdd);
+                    // addInQueue(arrToAdd);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             }
         }
     }
