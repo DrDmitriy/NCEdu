@@ -25,18 +25,19 @@ public class StringDecoder {
 
     public StringDecoder(String string) {
         this.stringBuilder = new StringBuilder(string);
-        this.charAray = this.stringBuilder.toString().toCharArray();
         this.charList = new ArrayList();
+        refreshData();
+    }
 
+    private void refreshData(){
+        this.charAray = this.stringBuilder.toString().toCharArray();
+        this.charList.clear();
         for (int i = 0; i < charAray.length; i++) {
             charList.add((int) charAray[i]);
         }
         countMaxNesting();
-        System.out.println(maxNestedLevel);
-        System.out.println(maxNestedLevelIndex);
-
-
     }
+
     public void decodeString(){
        while (maxNestedLevel>0){
            System.out.println("maxNestedLevelIndex = " + maxNestedLevelIndex);
@@ -48,18 +49,7 @@ public class StringDecoder {
 
 
                 System.out.println("newString " + stringBuilder);
-
-
-
-        this.charAray = this.stringBuilder.toString().toCharArray();
-
-
-           this.charList = new ArrayList();
-        for (int i = 0; i < charAray.length; i++) {
-            charList.add((int) charAray[i]);
-        }
-
-            countMaxNesting();
+                refreshData();
 
 
 
