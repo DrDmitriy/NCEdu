@@ -28,10 +28,8 @@ public class FillingQueue implements Runnable {
                 queueArray.notifyAll();
                 System.out.println(" Текущий размер очереди " + queueArray.getQueueIntegerMas().size());
             } else {
-                System.out.println("Вызываю метод wait in addInQueue ");
                 try {
                     queueArray.wait();
-                    // addInQueue(arrToAdd);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -41,7 +39,6 @@ public class FillingQueue implements Runnable {
 
     public void run() {
         while (true) {
-            System.out.println("RUN FILLING");
             generateArrays();
         }
     }

@@ -20,9 +20,7 @@ public class QueueArray {
     }
 
     public Integer[] getNextArray() {
-        System.out.println("Очередь - 1");
         Integer[] array = queueIntegerMas.poll();
-        // this.notify();
         return array;
     }
 }

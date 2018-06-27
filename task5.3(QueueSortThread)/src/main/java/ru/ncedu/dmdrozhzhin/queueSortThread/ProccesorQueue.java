@@ -12,12 +12,11 @@ public class ProccesorQueue implements Runnable {
     public void processNextArray() {
         Integer[] nextArray = null;
         synchronized (queueArray) {
-            System.out.println(Thread.currentThread().getName() + "  заблоктровал queueArray ");
             if (queueArray.getQueueIntegerMas().size() > 0) {
                 nextArray = queueArray.getNextArray();
+                queueArray.notifyAll();
             } else {
                 try {
-                    System.out.println("Вызываю wait в processNextArray");
                     queueArray.notifyAll();
                     queueArray.wait();
                 } catch (InterruptedException e) {
@@ -27,6 +26,7 @@ public class ProccesorQueue implements Runnable {
         }
         if (nextArray != null) {
             QuickSort.comSort(nextArray);
+            System.out.println("Массив успешно обрабоатан");
         }
     }
 
