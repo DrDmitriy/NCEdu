@@ -13,7 +13,7 @@ public class CheckString {
         final int LAST_DIGITAL = 57;
 
         char[] charArr = str.toCharArray();
-        if((int)charArr[0]== OPEN_BRACKET_ASCII || (int)charArr[0] == CLOSE_BRACKET_ASCII) {
+        if ((int) charArr[0] == OPEN_BRACKET_ASCII || (int) charArr[0] == CLOSE_BRACKET_ASCII) {
             System.out.println("String is invalid. Check a bracket on first position");
             return false;
         }
@@ -25,8 +25,7 @@ public class CheckString {
             if (asciiNum == OPEN_BRACKET_ASCII) {
                 if (preAsciiNum >= FIRST_DIGITAL && preAsciiNum <= LAST_DIGITAL) {
                     deep++;
-                }
-                else{
+                } else {
                     System.out.println("String is invalid. Check the numbers before the brackets");
                     return false;
                 }
@@ -50,6 +49,5 @@ public class CheckString {
         }
         return true;
     }
-
 
 }
