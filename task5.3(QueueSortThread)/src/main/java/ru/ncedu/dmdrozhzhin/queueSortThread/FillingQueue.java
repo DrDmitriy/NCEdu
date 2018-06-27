@@ -26,7 +26,7 @@ public class FillingQueue implements Runnable {
 
                 queueArray.addQueue(arrToAdd);
                 queueArray.notifyAll();
-                System.out.println(" Текущий размер очереди " + queueArray.getQueueIntegerMas().size());
+                System.out.println("Текущий размер очереди " + queueArray.getQueueIntegerMas().size());
             } else {
                 try {
                     queueArray.wait();
