@@ -7,8 +7,9 @@ public class Main {
     private static BlockingQueue<Integer[]> blockingQueue;
 
     public static void main(String[] args) {
-        int countPool = 5;
-        blockingQueue = new ArrayBlockingQueue<Integer[]>(100);
+        int countPool = Integer.valueOf(args[0]);
+        int capasity = Integer.valueOf(args[1]);
+        blockingQueue = new ArrayBlockingQueue<Integer[]>(capasity);
 
         ExecutorService executorService = Executors.newFixedThreadPool(countPool);
         new Thread(new ArrayProducer(blockingQueue)).start();
