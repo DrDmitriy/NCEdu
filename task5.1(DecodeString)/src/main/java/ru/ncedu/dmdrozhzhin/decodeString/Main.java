@@ -10,7 +10,7 @@ public class Main {
         System.out.println(d);*/
 
         //String test = "2[1[2[dsdz[[3[test_]]]f]]2[fdsf]]";
-        String test = "2[xyz3[R]]";
+        String test = "2[x3[y]]"; //2[xyyy]
         //System.out.println(new CheckString().isValid(test));
         StringDecoder stringDecoder = new StringDecoder(test);
         stringDecoder.decodeString();
