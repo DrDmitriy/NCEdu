@@ -26,7 +26,6 @@ public class StringDecoder {
     public StringDecoder(String string) {
         this.stringBuilder = new StringBuilder(string);
         this.charAray = this.stringBuilder.toString().toCharArray();
-
         this.charList = new ArrayList();
 
         for (int i = 0; i < charAray.length; i++) {
@@ -40,20 +39,14 @@ public class StringDecoder {
     }
     public void decodeString(){
        while (maxNestedLevel>0){
-            //countMaxNesting();
-            System.out.println("maxNestedLevelIndex = " + maxNestedLevelIndex);
+           System.out.println("maxNestedLevelIndex = " + maxNestedLevelIndex);
 
                 char charKoef = (char) determDigital(maxNestedLevelIndex);
                 Integer koef = Integer.valueOf(String.valueOf(charKoef));
-                //System.out.println(koef);
                 String openBracket = openBracket(koef);
-           System.out.println("oldString " + stringBuilder);
                 stringBuilder.replace(maxNestedLevelIndex-countDigitalInKoef,maxNestedLevelIndexCloseBracket+1,openBracket);
 
-           /*
-                stringBuilder.delete(maxNestedLevelIndex-1, maxNestedLevelIndexCloseBracket + 1);
-           System.out.println("After delete " + stringBuilder);
-                stringBuilder.insert(maxNestedLevelIndex, openBracket);*/
+
                 System.out.println("newString " + stringBuilder);
 
 
@@ -94,14 +87,6 @@ public class StringDecoder {
         for (int i = 0; i< koef; i++){
             witoutBracket.append(stringBuilder);
         }
-       // System.out.println(witoutBracket);
-
-     /*   if(asciiCode>= FIRST_UPPER_CASE_LETTER  && asciiCode<= LAST_UPPER_CASE_LETTER  || asciiCode>=FIRST_LOWER_CASE_LETTER && asciiCode <= LAST_LOWER_CASE_LETTER){
-
-        }
-        else{
-            System.out.println("Такой ситуации не должно произойти");
-        }*/
 
      return witoutBracket.toString();
     }
@@ -112,13 +97,10 @@ public class StringDecoder {
         maxNestedLevel = 0;
         int indexOpenBracket = 0;
         for (int i = 0; i < charList.size(); i++) {
-            //System.out.println("countMaxNesting block FOR");
             Integer a = (Integer) charList.get(i);
             if (a.equals(OPEN_BRACKET_ASCII)) {
-                //System.out.println("countMaxNesting block FIRST IF");
                 nestedLevel++;
                 if (nestedLevel > maxNestedLevel) {
-                    //System.out.println("countMaxNesting block SECOND IF");
                     maxNestedLevel = nestedLevel;
                     maxNestedLevelIndex = i;
                 }
@@ -140,7 +122,6 @@ public class StringDecoder {
         while (asciiCode >= FIRST_DIGITAL && asciiCode <= LAST_DIGITAL && bracketIndex >= 0) {
             countDigitalInKoef++;
             digitalString.insert(0, asciiCode);
-            //System.out.println("!!!" + digitalString.toString());
             if (bracketIndex.equals(0)) { return Integer.valueOf(digitalString.toString()); }
 
             asciiCode = (Integer) charList.get(--bracketIndex);
