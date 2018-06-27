@@ -42,7 +42,8 @@ public class StringDecoder {
        while (maxNestedLevel>0){
            System.out.println("maxNestedLevelIndex = " + maxNestedLevelIndex);
 
-                char charKoef = (char) determDigital(maxNestedLevelIndex);
+                //char charKoef = (char) determDigital(maxNestedLevelIndex);
+                int charKoef =  determDigital(maxNestedLevelIndex);
                 Integer koef = Integer.valueOf(String.valueOf(charKoef));
                 String openBracket = openBracket(koef);
                 stringBuilder.replace(maxNestedLevelIndex-countDigitalInKoef,maxNestedLevelIndexCloseBracket+1,openBracket);
@@ -111,13 +112,18 @@ public class StringDecoder {
 
         while (asciiCode >= FIRST_DIGITAL && asciiCode <= LAST_DIGITAL && bracketIndex >= 0) {
             countDigitalInKoef++;
-            digitalString.insert(0, asciiCode);
-            if (bracketIndex.equals(0)) { return Integer.valueOf(digitalString.toString()); }
+            System.out.println("ascii = " + asciiCode);
+            digitalString.insert(0, String.valueOf((char)(int)asciiCode));
+            System.out.println("digitalString = " + digitalString);
+            if (bracketIndex.equals(0)) {
+                System.out.println("determDigital first ret = "+ Integer.valueOf(digitalString.toString()));
+                return Integer.valueOf(digitalString.toString()); }
 
             asciiCode = (Integer) charList.get(--bracketIndex);
 
 
         }
+        System.out.println("determDigital = "+ Integer.valueOf(digitalString.toString()));
         return Integer.valueOf(digitalString.toString());
 
     }
