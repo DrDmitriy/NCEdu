@@ -10,7 +10,6 @@ public class StringDecoder {
     private int maxNestedLevelIndexOpenBracket;
     private int maxNestedLevelIndexCloseBracket;
     private int countDigitalInKoef;
-
     final int OPEN_BRACKET_ASCII = 91;
     final int CLOSE_BRACKET_ASCII = 93;
     final int FIRST_DIGITAL = 48;
