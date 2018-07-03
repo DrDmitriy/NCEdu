@@ -1,7 +1,6 @@
 package ru.ncedu.dmdrozhzhin.queueSortThreatConncurent;
 
 import ru.ncedu.dmdrozhzhin.quicksort.QuickSort;
-
 import java.util.concurrent.BlockingQueue;
 
 public class ArrayConsumer implements Runnable {
