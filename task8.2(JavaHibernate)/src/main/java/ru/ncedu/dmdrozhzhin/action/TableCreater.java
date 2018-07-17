@@ -48,5 +48,7 @@ public class TableCreater {
         SchemaExport export = getSchemaExport();
         System.out.println("Create Database...");
         createDataBase(export,metadata);
+
+        serviceRegistry.close();
     }
 }
