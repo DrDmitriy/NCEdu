@@ -15,14 +15,18 @@ public class Client {
     boolean readRunnig = true;
 
     public Client() {
-        regestryLogin();
-        new Thread(new MessageOutput()).start();
+
     }
 
     public static void main(String[] args) {
         Client client = new Client();
-        client.getConnection();
-        client.read();
+        client.start();
+    }
+    public void start(){
+        getConnection();
+        regestryLogin();
+        new Thread(new MessageOutput()).start();
+        read();
     }
 
     private void getConnection() {
@@ -31,7 +35,7 @@ public class Client {
             InetAddress inetAddress = InetAddress.getLocalHost();
             socketChannel = SocketChannel.open(new InetSocketAddress(inetAddress, port));
             socketChannel.configureBlocking(false);
-            socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(new Message(login," "," "))));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,8 +77,11 @@ public class Client {
             while (running) {
                 // System.out.print (">>> ");
                 try {
+                    System.out.println("Введите получателя [ToAll or User Login]");
+                    String recipient = reader.readLine();
+                    System.out.println("Введите сообщение");
                     String str = reader.readLine();
-                    Message message = new Message("ClientName1",str,"ToAll");
+                    Message message = new Message(login,str,recipient);
 
                     socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(message)));
                     //socketChannel.write(ByteBuffer.wrap(str.getBytes()));
@@ -89,10 +96,33 @@ public class Client {
     private void regestryLogin(){
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите логин");
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        StringBuffer sb = new StringBuffer();
         try {
             login = reader.readLine();
+            socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(new Message(login," "," "))));
+
+            int num = 0;
+           // buffer.flip();
+            Thread.sleep(1000);
+//while (sb.toString().equals("")){
+
+        while ((num = socketChannel.read(buffer)) > 0) {
+            sb.append(new String(buffer.array(), 0, num));
+            buffer.clear();
+        }
+//}
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (sb.toString().equals("true")){
+            System.out.println(login+ " успешно зарегистрирован");
+        }
+        else {
+            System.out.println(sb.toString()+ " Такой логие уже используется");
+            regestryLogin();
         }
 
     }

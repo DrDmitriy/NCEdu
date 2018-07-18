@@ -117,9 +117,10 @@ public class Server {
                 if(keyMap.get(message.getLoginFrom())== null) {
                     keyMap.put(message.getLoginFrom(),key);
                     System.out.println(message.getLoginFrom()+" успешно зарегистрирован");
+                    write(key,"true");
                 }
                 else {
-                    write(key,"Такой логин уже используется");
+                    write(key,"false");
                     //
                 }
             }
@@ -128,16 +129,27 @@ public class Server {
                 //broadCast
 
 
-                for (SelectionKey k : selector.selectedKeys()){
-                    write(k,messageString);
+                for (Map.Entry<String, SelectionKey> entry: keyMap.entrySet()){
+
+                    SelectionKey rKey = entry.getValue();
+                    if(!rKey.equals(key)){
+                     write(entry.getValue(),"To All "+messageString);
+                    }
                 }
+
+
 
 
             }
             else  {
                 SelectionKey recipientKey = keyMap.get(message.getLoginTo());
+                if (recipientKey == null){
+                    write(key,"Такой контакт не зарегистрирован");
+                }
+                else {
 
-                write(recipientKey,messageString);
+                    write(recipientKey, messageString);
+                }
             }
 
 
