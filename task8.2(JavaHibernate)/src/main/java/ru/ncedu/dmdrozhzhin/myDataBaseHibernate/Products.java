@@ -19,13 +19,22 @@ public class Products {
     private Manufacture manufacturs;
 
 
-/*
-    @ManyToMany
+/*    @ManyToMany
     @JoinTable(name = "Orders",
             joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
+            inverseJoinColumns = @JoinColumn(name = "order_id"))*/
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Orders> ordersList = new ArrayList<>();
-*/
+    public List<Orders> getOrdersList() {
+
+        return ordersList;
+    }
+
+    public void setOrdersList(List<Orders> ordersList) {
+
+        this.ordersList = ordersList;
+    }
+
 
     @Column
     private String name;
@@ -40,7 +49,7 @@ public class Products {
     @Column
     private String size;
 
-    public Products(Manufacture manufacturs,Orders o, String name, double price, String category, boolean is_available, int year_production, String size) {
+    public Products(Manufacture manufacturs, String name, double price, String category, boolean is_available, int year_production, String size) {
         this.manufacturs = manufacturs;
         this.name = name;
         this.price = price;

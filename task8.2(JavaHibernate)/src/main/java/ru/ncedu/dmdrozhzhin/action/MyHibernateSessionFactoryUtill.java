@@ -3,8 +3,7 @@ package ru.ncedu.dmdrozhzhin.action;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import ru.ncedu.dmdrozhzhin.HibernateExample.Auto;
-import ru.ncedu.dmdrozhzhin.HibernateExample.User;
+
 import ru.ncedu.dmdrozhzhin.myDataBaseHibernate.Customers;
 import ru.ncedu.dmdrozhzhin.myDataBaseHibernate.Manufacture;
 import ru.ncedu.dmdrozhzhin.myDataBaseHibernate.Orders;
