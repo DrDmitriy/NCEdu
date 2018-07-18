@@ -10,15 +10,16 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 public class Client {
+    private String login;
     SocketChannel socketChannel;
     boolean readRunnig = true;
 
     public Client() {
+        regestryLogin();
         new Thread(new MessageOutput()).start();
     }
 
     public static void main(String[] args) {
-
         Client client = new Client();
         client.getConnection();
         client.read();
@@ -30,6 +31,7 @@ public class Client {
             InetAddress inetAddress = InetAddress.getLocalHost();
             socketChannel = SocketChannel.open(new InetSocketAddress(inetAddress, port));
             socketChannel.configureBlocking(false);
+            socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(new Message(login," "," "))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,12 +74,26 @@ public class Client {
                 // System.out.print (">>> ");
                 try {
                     String str = reader.readLine();
-                    socketChannel.write(ByteBuffer.wrap(str.getBytes()));
+                    Message message = new Message("ClientName1",str,"ToAll");
+
+                    socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(message)));
+                    //socketChannel.write(ByteBuffer.wrap(str.getBytes()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
         }
+    }
+
+    private void regestryLogin(){
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Введите логин");
+        try {
+            login = reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

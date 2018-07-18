@@ -1,5 +1,8 @@
 package ru.ncedu.dmdrozhzhin.clientServerChat;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.util.JSONPObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,10 +15,14 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 public class Server {
+    Map<String,SelectionKey> keyMap;
+    static  int staticNum = 0;
     Selector selector;
     ServerSocketChannel serverSocketChannel;
     int port = 9000;
@@ -30,6 +37,8 @@ public class Server {
             InetSocketAddress inetSocketAddress = new InetSocketAddress(inetAddress, port);
             serverSocketChannel.bind(inetSocketAddress);
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
+            keyMap = new HashMap<>();
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -49,7 +58,7 @@ public class Server {
                         SelectionKey key = iterator.next();
                         iterator.remove();
 
-                        if (key.isAcceptable()) {
+                        if (key.isAcceptable()){
                             connect(key);
                         } else if (key.isReadable()) {
                             read(key);
@@ -75,6 +84,8 @@ public class Server {
         socketChannel.configureBlocking(false);
         socketChannel.register(selector, SelectionKey.OP_READ);
         System.out.println("Successful connection");
+        staticNum++;
+
     }
     private void read(SelectionKey key) throws IOException {
         SocketChannel socketChannel = (SocketChannel) key.channel();
@@ -83,25 +94,66 @@ public class Server {
         //System.out.println("!!!! "+ new String(buffer.array(),0));
         buffer.clear();
 
+
         StringBuffer stringBuffer = new StringBuffer();
         int len = 0;
+
         while ((len = socketChannel.read(buffer)) > 0) {
             buffer.flip();
             stringBuffer.append(new String(buffer.array(), 0, len));
         }
+//        if(key.attachment()== null){
+//            key.attach("Client " + staticNum);
+//        }
+
         if (stringBuffer.length() > 0) {
+            ObjectMapper objectMapper = new ObjectMapper();
             System.out.println(socketChannel.socket().getRemoteSocketAddress() + ">>  " + stringBuffer.toString());
+            Message message = objectMapper.readValue(stringBuffer.toString(),Message.class);
+            String messageString = "From " + message.getLoginFrom()+" :" + message.getMessage();
+
+            //Если сообщение пустое  --> Регистрация -> пробуем добавить в базу
+            if (message.getMessage().equals(" ")){
+                if(keyMap.get(message.getLoginFrom())== null) {
+                    keyMap.put(message.getLoginFrom(),key);
+                    System.out.println(message.getLoginFrom()+" успешно зарегистрирован");
+                }
+                else {
+                    write(key,"Такой логин уже используется");
+                    //
+                }
+            }
+
+           else if (message.getLoginTo().equals("ToAll")){
+                //broadCast
+
+
+                for (SelectionKey k : selector.selectedKeys()){
+                    write(k,messageString);
+                }
+
+
+            }
+            else  {
+                SelectionKey recipientKey = keyMap.get(message.getLoginTo());
+
+                write(recipientKey,messageString);
+            }
+
+
             //write(socketChannel,stringBuffer);
             //key.interestOps(SelectionKey.OP_WRITE);
-            write(socketChannel, stringBuffer);
+            //write(key, stringBuffer);
             key.interestOps(SelectionKey.OP_READ);
         }
         //selector.wakeup();
     }
 
-    private void write(SocketChannel chanel, StringBuffer sb) {
+    private void write(SelectionKey key, String s) {
         try {
-            chanel.write(ByteBuffer.wrap(sb.toString().toUpperCase().getBytes()));
+            //System.out.println(key.attachment());
+            SocketChannel socketChannel = (SocketChannel) key.channel();
+            socketChannel.write(ByteBuffer.wrap(s.getBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
