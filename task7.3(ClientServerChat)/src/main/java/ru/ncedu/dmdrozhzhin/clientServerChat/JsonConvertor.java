@@ -46,6 +46,19 @@ public class JsonConvertor {
         }
         return tObj;
     }
+    public static  <T>  T reversConvert(String s, Class<T> claz){
+        //return reversConvert(s.getBytes(),claz);
+        ObjectMapper mapper = new ObjectMapper();
+        //  Class reverseClass = claz.getClass();
+        T tObj = null;
+        try {
+            tObj  = mapper.readValue(s,claz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return tObj;
+    }
+
   //Testing
     public static void main(String[] args){
         Message message = reversConvert(convert(new Message("123","123","")),Message.class);

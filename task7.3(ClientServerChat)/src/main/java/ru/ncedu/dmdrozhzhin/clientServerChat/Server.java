@@ -2,6 +2,8 @@ package ru.ncedu.dmdrozhzhin.clientServerChat;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.util.JSONPObject;
+import ru.ncedu.dmdrozhzhin.clientServerChat.DataBase.Account;
+import ru.ncedu.dmdrozhzhin.clientServerChat.DataBase.UserDaoImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,9 +25,12 @@ import java.util.Set;
 public class Server {
     Map<String, SelectionKey> keyMap;
     Map<SelectionKey, Boolean> autentifMap;
+    Map<SelectionKey, String> mapKeyLogin;
     static int staticNum = 0;
     Selector selector;
     ServerSocketChannel serverSocketChannel;
+    UserDaoImpl userDao;
+
     int port = 9000;
 
     public Server() {
@@ -40,6 +45,8 @@ public class Server {
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
             keyMap = new HashMap<>();
             autentifMap = new HashMap<>();
+            userDao = new UserDaoImpl();
+            mapKeyLogin = new HashMap<>();
 
 
         } catch (IOException e) {
@@ -55,10 +62,12 @@ public class Server {
         while (true) {
             try {
                 int num = selector.select();
-                if (num > 0) {
+                                if (num > 0) {
                     Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
                     while (iterator.hasNext()) {
+
                         SelectionKey key = iterator.next();
+                        //System.out.println("PPPPPPPPPPPPPPPPPPP" + key.isReadable());
                         iterator.remove();
 
                         if (key.isAcceptable()) {
@@ -86,36 +95,105 @@ public class Server {
         SocketChannel socketChannel = connectChanel.accept();
         socketChannel.configureBlocking(false);
         socketChannel.register(selector, SelectionKey.OP_READ);
-        //При первом соединение клиент не авторизирован -> Делаю метку в attachment
-
         System.out.println("Successful connection");
     }
 
     private void read(SelectionKey key) throws IOException {
-        if(autentifMap.get(key) == null ){
-            autentifMap.put(key,false);
+        if (autentifMap.get(key) == null) {
+            autentifMap.put(key, false);
         }
 
         String messageFromChanel = readFromKey(key);
         if(messageFromChanel.length()>0) { //Если что-то получил от клиента
-            if (autentifMap.get(key).equals(Boolean.TRUE)) {
+            System.out.println("**********************");
+          /*  if (autentifMap.get(key).equals(Boolean.TRUE)) {
+
+                System.out.println("Начинаю общение с "+ mapKeyLogin.get(key));
                 //Общение
-            } else { //Регистрация/Вход
-                if (messageFromChanel.equals("registry")){
-                    writeToKey(key,"registryOk");
-                    System.out.println("Answer is registry");
-                }
-                else if(messageFromChanel.equals("sign in")){
-                    writeToKey(key,"signInOk");
-                    System.out.println("Answer is sign in");
+            }*/
+
+            if(mapKeyLogin.get(key) != null){
+                System.out.println("Начинаю общение с "+ mapKeyLogin.get(key));
+                System.out.println(messageFromChanel);
+                Message message = JsonConvertor.reversConvert(messageFromChanel,Message.class);
+                //System.out.println("&&&&&" + message.getLoginFrom() + message.getMessage() + message.getLoginTo());
+                String messageString = "From "+ message.getLoginFrom()+": " + message.getMessage();
+                if (message.getLoginTo().equals("ToAll")){
+                    for(Map.Entry<SelectionKey,String> entry: mapKeyLogin.entrySet()){
+                       SelectionKey keyTo = entry.getKey();
+                        if(!keyTo.equals(key)){
+                            writeToKey(keyTo,"To All "+ messageString);
+                        }
+
+                    }
                 }
                 else {
-                    writeToKey(key,"Не верная команада");
+                    SelectionKey recipientKey = keyMap.get(message.getLoginTo());
+                    if(recipientKey == null) {
+                        if(userDao.loginIsExsist(message.getLoginTo())){
+                            writeToKey(key,message.getLoginTo() + " is offline");
+                        }
+                        else {
+                            writeToKey(key,"Контакт \""+ message.getLoginTo()+ "\" не зарегистрирован");
+                        }
+                    }
+                    else {
+                        writeToKey(recipientKey,messageString);
+                    }
                 }
+            }
 
 
+
+
+            else {
+                UserAccount userAccount = JsonConvertor.reversConvert(messageFromChanel,UserAccount.class);
+                if (userAccount.getLogin().length() > 0 && userAccount.getPassword().length() > 0) {
+                    //Регистрация/Вход
+
+                    if ((userAccount.isRegistry()).equals(Boolean.TRUE)) {
+                        System.out.println("Answer is registry");
+                        System.out.println(userAccount);
+                        if(!userDao.loginIsExsist(userAccount.getLogin())){
+                            //Регистрация в БД
+                            userDao.addUser(new Account(userAccount.getLogin(),userAccount.getPassword(),userAccount.getEmail()));
+                           // autentifMap.put(key,true);
+                            keyMap.put(userAccount.getLogin(),key);
+                            mapKeyLogin.put(key,userAccount.getLogin());
+                            writeToKey(key, "registryTrue");
+                        }
+                        else {
+                            writeToKey(key, "registryFalse");
+                            //Логин уже занят
+                        }
+                    } else {
+                        System.out.println("Answer is sign in");
+                        System.out.println(messageFromChanel);
+                        //Проверка в БД  -> Если ок autentifMap.put(key,true);
+                        if(userDao.isValidPasword(userAccount.getLogin(),userAccount.getPassword())){
+                            //autentifMap.put(key,true);
+                            //Добавление в мапу
+                            keyMap.put(userAccount.getLogin(),key);
+                            mapKeyLogin.put(key,userAccount.getLogin());
+                            writeToKey(key, "signInTrue");
+                            }
+                        else {
+                            writeToKey(key, "signInFalse");
+
+                        }
+                       //writeToKey(key,"signInFalse");
+
+                    }
+
+
+                } else {
+                    writeToKey(key, "Не корректные данные");
+                }
             }
         }
+
+
+        //--------------------------------------------------------------
        /*
 
         SocketChannel socketChannel = (SocketChannel) key.channel();
@@ -213,15 +291,20 @@ public class Server {
 
     }*/
 
-    private String readFromKey(SelectionKey key) throws IOException {
+    private String readFromKey(SelectionKey key) {
         SocketChannel socketChannel = (SocketChannel) key.channel();
-        StringBuffer sb = new StringBuffer("");
         ByteBuffer buffer = ByteBuffer.allocate(1024);
-        buffer.clear();
-            int len = 0;
+        StringBuffer sb = new StringBuffer("");
+        int len = 0;
+        try {
             while ((len = socketChannel.read(buffer)) > 0) {
                 sb.append(new String(buffer.array(), 0, len));
+                //buffer.clear();
             }
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+        buffer.clear();
         return sb.toString();
     }
 
@@ -229,6 +312,8 @@ public class Server {
         SocketChannel socketChannel = (SocketChannel) key.channel();
         socketChannel.write(ByteBuffer.wrap(messageToKey.getBytes()));
     }
+
+
 }
 
 

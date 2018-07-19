@@ -30,7 +30,7 @@ public class Client {
     public void start() {
         getConnection();
         try {
-            regestryLogin(); //Or Sign In
+            authethification(); //Or Sign In
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -60,7 +60,7 @@ public class Client {
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         //SocketChannel socketChannel2 =  socketChannel.socket().getChannel();
         while (readRunnig) {
-            buffer.clear();
+
             try {
                 while ((num = socketChannel.read(buffer)) > 0) {
                     sb.append(new String(buffer.array(), 0, num));
@@ -72,7 +72,7 @@ public class Client {
                     System.out.println("<<< " + sb.toString());
                     sb.delete(0, sb.length());
                 }
-                buffer.flip();
+                buffer.clear();
             } catch (IOException ex) {
             }
         }
@@ -107,33 +107,81 @@ public class Client {
         }
     }
 
-    private void regestryLogin() throws IOException, InterruptedException {
+    private void authethification () throws IOException, InterruptedException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        UserAccount userAccount = new UserAccount();
         try {
             System.out.println("Введите [registry/sign in] >>");
-            login = reader.readLine();
-            socketChannel.write(ByteBuffer.wrap(login.getBytes()));
+            String choice = reader.readLine();
+
+            if(choice.equals("registry")){
+                UserAccount accToReg = userAccount.registry();
+                socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(accToReg)));
+                String answer = waitAnswer(socketChannel);
+                if (answer.equals("registryTrue")) {
+                    login = userAccount.getLogin();
+                    System.out.println("registryTrue");
+                    startChat();
+                }
+                else if (answer.equals("registryFalse")){
+                    System.out.println("Такой логин ужен занят");
+                    authethification();
+                }
+            }
+            else if(choice.equals("sign in")){
+                UserAccount accToSingIn = userAccount.signIn();
+                socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(accToSingIn)));
+                String answer = waitAnswer(socketChannel);
+                if (answer.equals("signInTrue")) {
+                    login = userAccount.getLogin();
+                    System.out.println("signInTrue");
+                    startChat();
+                }
+                else if (answer.equals("signInFalse")){
+                    System.out.println("Не верный логин или пароль");
+                    authethification();
+                }
+            }
+            else {
+                System.out.println("Не верная команда");
+                authethification();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        String answer = "";
+    private void startChat() {
+        new Thread(new MessageOutput()).start();
+        read();
+    }
+
+        /*String answer = "";
         while (answer.equals("")) { // Пока не получен ответ
            answer = readFromChanel(socketChannel);
         }
 
-        if (answer.toString().equals("registryOk")) {
-            System.out.println("registryOk");
-        }
-        else if(answer.toString().equals("signInOk")){
-            System.out.println("signInOk");
+
+        else if(answer.toString().equals("signInTrue")){
+            System.out.println("signInTrue");
         }
         else {
             System.out.println(answer.toString());
             regestryLogin();
-        }
+        }*/
 
+
+    private String waitAnswer(SocketChannel socketChannel){
+        String answer = "";
+        while (answer.equals("")) { // Пока не получен ответ
+            try {
+                answer = readFromChanel(socketChannel);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return answer;
     }
     private String readFromChanel(SocketChannel socketChannel) throws IOException {
         //SocketChannel socketChannel = (SocketChannel) key.channel();
