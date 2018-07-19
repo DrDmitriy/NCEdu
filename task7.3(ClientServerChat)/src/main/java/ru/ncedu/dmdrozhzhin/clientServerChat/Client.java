@@ -5,23 +5,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
 public class Client {
     private String login;
     SocketChannel socketChannel;
     boolean readRunnig = true;
-    static boolean connectAgain = true;
 
     public Client() {
 
     }
 
     public static void main(String[] args) {
-        //while (connectAgain) {
         Client client = new Client();
         client.start();
 
@@ -29,17 +25,7 @@ public class Client {
 
     public void start() {
         getConnection();
-        try {
-            authethification(); //Or Sign In
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-       // new Thread(new MessageOutput()).start();
-       // read();
-
+        authethification(); //Or Sign In
     }
 
     private void getConnection() {
@@ -48,7 +34,6 @@ public class Client {
             InetAddress inetAddress = InetAddress.getLocalHost();
             socketChannel = SocketChannel.open(new InetSocketAddress(inetAddress, port));
             socketChannel.configureBlocking(false);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,17 +43,14 @@ public class Client {
         int num = 0;
         StringBuffer sb = new StringBuffer();
         ByteBuffer buffer = ByteBuffer.allocate(1024);
-        //SocketChannel socketChannel2 =  socketChannel.socket().getChannel();
         while (readRunnig) {
 
             try {
                 while ((num = socketChannel.read(buffer)) > 0) {
                     sb.append(new String(buffer.array(), 0, num));
                     buffer.clear();
-                    //System.out.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
                 }
                 if (sb.length() > 0) {
-                    //System.out.println();
                     System.out.println("<<< " + sb.toString());
                     sb.delete(0, sb.length());
                 }
@@ -89,7 +71,6 @@ public class Client {
         public void run() {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             while (running) {
-                // System.out.print (">>> ");
                 try {
                     System.out.println("Введите получателя [ToAll or User Login]");
                     String recipient = reader.readLine();
@@ -98,7 +79,7 @@ public class Client {
                     Message message = new Message(login, str, recipient);
 
                     socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(message)));
-                    //socketChannel.write(ByteBuffer.wrap(str.getBytes()));
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -107,14 +88,14 @@ public class Client {
         }
     }
 
-    private void authethification () throws IOException, InterruptedException {
+    private void authethification() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         UserAccount userAccount = new UserAccount();
         try {
             System.out.println("Введите [registry/sign in] >>");
             String choice = reader.readLine();
 
-            if(choice.equals("registry")){
+            if (choice.equals("registry")) {
                 UserAccount accToReg = userAccount.registry();
                 socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(accToReg)));
                 String answer = waitAnswer(socketChannel);
@@ -122,13 +103,11 @@ public class Client {
                     login = userAccount.getLogin();
                     System.out.println("registryTrue");
                     startChat();
-                }
-                else if (answer.equals("registryFalse")){
+                } else if (answer.equals("registryFalse")) {
                     System.out.println("Такой логин ужен занят");
                     authethification();
                 }
-            }
-            else if(choice.equals("sign in")){
+            } else if (choice.equals("sign in")) {
                 UserAccount accToSingIn = userAccount.signIn();
                 socketChannel.write(ByteBuffer.wrap(JsonConvertor.convert(accToSingIn)));
                 String answer = waitAnswer(socketChannel);
@@ -136,13 +115,11 @@ public class Client {
                     login = userAccount.getLogin();
                     System.out.println("signInTrue");
                     startChat();
-                }
-                else if (answer.equals("signInFalse")){
+                } else if (answer.equals("signInFalse")) {
                     System.out.println("Не верный логин или пароль");
                     authethification();
                 }
-            }
-            else {
+            } else {
                 System.out.println("Не верная команда");
                 authethification();
             }
@@ -157,22 +134,7 @@ public class Client {
         read();
     }
 
-        /*String answer = "";
-        while (answer.equals("")) { // Пока не получен ответ
-           answer = readFromChanel(socketChannel);
-        }
-
-
-        else if(answer.toString().equals("signInTrue")){
-            System.out.println("signInTrue");
-        }
-        else {
-            System.out.println(answer.toString());
-            regestryLogin();
-        }*/
-
-
-    private String waitAnswer(SocketChannel socketChannel){
+    private String waitAnswer(SocketChannel socketChannel) {
         String answer = "";
         while (answer.equals("")) { // Пока не получен ответ
             try {
@@ -183,8 +145,8 @@ public class Client {
         }
         return answer;
     }
+
     private String readFromChanel(SocketChannel socketChannel) throws IOException {
-        //SocketChannel socketChannel = (SocketChannel) key.channel();
         StringBuffer sb = new StringBuffer("");
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         buffer.clear();
@@ -193,10 +155,5 @@ public class Client {
             sb.append(new String(buffer.array(), 0, len));
         }
         return sb.toString();
-    }
-
-    private void writeToChannel(SocketChannel socketChannel, String messageToKey) throws IOException {
-        //SocketChannel socketChannel = (SocketChannel) key.channel();
-        socketChannel.write(ByteBuffer.wrap(messageToKey.getBytes()));
     }
 }

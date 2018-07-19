@@ -7,11 +7,13 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateSeesion {
     private static SessionFactory sessionFactory;
-    private HibernateSeesion(){
+
+    private HibernateSeesion() {
 
     }
+
     public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null){
+        if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration().configure();
                 configuration.addAnnotatedClass(Account.class);
@@ -19,8 +21,7 @@ public class HibernateSeesion {
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Exception" + e);
             }
         }

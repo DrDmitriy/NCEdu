@@ -5,8 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Account")
 public class Account {
-    public Account(){
-
+    public Account() {
     }
 
     public Account(String login, String password, String email) {
@@ -16,7 +15,7 @@ public class Account {
     }
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(name = "login")
     private String login;
@@ -48,6 +47,4 @@ public class Account {
     public void setEmail(String email) {
         this.email = email;
     }
-
-
 }

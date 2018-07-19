@@ -28,6 +28,7 @@ public class UserAccount {
     private String email;
 
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
     @Transient
     @Override
     public String toString() {
@@ -38,9 +39,6 @@ public class UserAccount {
                 ", email='" + email + '\'' +
                 '}';
     }
-
-
-
 
     public String getLogin() {
         return login;
@@ -59,24 +57,12 @@ public class UserAccount {
     }
 
 
-    public UserAccount(){
+    public UserAccount() {
 
     }
 
- /*   public UserAccount(String login, String password) {
-        this.isRegistry = false;
-        this.login = login;
-        this.password = password;
-    }
-    //Если указывается email -> registry
-    public UserAccount(String login, String password, String email) {
-        this.isRegistry = true;
-        this.email = email;
-        this.login = login;
-        this.password = password;
-    }*/
-@Transient
-    public UserAccount signIn(){
+    @Transient
+    public UserAccount signIn() {
 
         try {
             System.out.println("Введите логин: ");
@@ -90,7 +76,8 @@ public class UserAccount {
         }
         return this;
     }
-@Transient
+
+    @Transient
     public UserAccount registry() {
         UserAccount userAccount = signIn();
         try {
@@ -102,6 +89,4 @@ public class UserAccount {
         }
         return userAccount;
     }
-
-
 }
