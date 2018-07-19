@@ -9,7 +9,7 @@ public class JsonConvertor {
     static ObjectMapper mapper = new ObjectMapper();
 
 
-    public static byte[] convert(Message message) {
+  /*  public static byte[] convert(Message message) {
 
         byte[] messageInByte = new byte[0];
         try {
@@ -19,6 +19,37 @@ public class JsonConvertor {
         }
 
         return messageInByte;
+    }*/
+
+    public static <T> byte[] convert(T obj) {
+
+        byte[] objIByte = new byte[0];
+        try {
+            objIByte = mapper.writeValueAsBytes(obj);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return objIByte;
+    }
+
+
+    // Написать метод обратного конвертирования
+    public static  <T>  T reversConvert(byte[] bytes, Class<T> claz){
+        ObjectMapper mapper = new ObjectMapper();
+      //  Class reverseClass = claz.getClass();
+        T tObj = null;
+        try {
+           tObj  = (T)mapper.readValue(bytes,claz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return tObj;
+    }
+  //Testing
+    public static void main(String[] args){
+        Message message = reversConvert(convert(new Message("123","123","")),Message.class);
+        System.out.println(message.getLoginFrom() + " " + message.getMessage());
     }
 
 
