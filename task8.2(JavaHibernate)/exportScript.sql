@@ -99,3 +99,9 @@ alter table Orders add constraint FK11rqp7qfc8yq63un7pul57afi foreign key (produ
 alter table Products add constraint FKnahwyj9u7wcb1ij60xic3y080 foreign key (manufacturer_id) references Manufacture;
 alter table Products add constraint FKgfe5dn2mphqh8xwyfpmv95a93 foreign key (product_id) references Products;
 alter table Products add constraint FKmxbu8w4xjhyvb22uutkclijgj foreign key (order_id) references Orders;
+create sequence hibernate_sequence start 1 increment 1;
+create table Customers (customer_id int4 not null, address varchar(255), name varchar(255), phone_number varchar(255), primary key (customer_id));
+create table Manufacture (manufacturer_id int4 not null, address varchar(255), county varchar(255), name varchar(255), phone_number varchar(255), primary key (manufacturer_id));
+create sequence hibernate_sequence start 1 increment 1;
+create table Customers (customer_id int4 not null, address varchar(255), name varchar(255), phone_number varchar(255), primary key (customer_id));
+create table Manufacture (manufacturer_id int4 not null, address varchar(255), county varchar(255), name varchar(255), phone_number varchar(255), primary key (manufacturer_id));
