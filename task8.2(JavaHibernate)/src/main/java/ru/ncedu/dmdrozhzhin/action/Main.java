@@ -15,28 +15,17 @@ public class Main {
 
         Products products1 = new Products(manufacture,"IdeaPad1130",35000,"laptop",true,2017,"10x5x3");
         Products products2 = new Products(manufacture,"IdeaPad2222",35000,"laptop",true,2017,"10x5x3");
+        Products products3 = new Products(manufacture,"IdeaPad1111",35000,"laptop",true,2017,"10x5x3");
 
-
-        Orders orders = new Orders(3500,customers,products1);
-        //orders.addProduct(products1);
-        //orders.addProduct(products2);
-        /*ArrayList<Products> productsArrayList = new ArrayList<>();
-        productsArrayList.add(products1);
-        orders.setProductsList(productsArrayList);
-
-
-        ArrayList<Orders> ordersArrayList = new ArrayList<>();
-        ordersArrayList.add(orders);
-        products1.setOrdersList(ordersArrayList);
-*/
+        Orders orders = new Orders(3500,customers);
         UserService userService = new UserService();
+        orders.addProductToOrder(products1);
+        orders.addProductToOrder(products2);
+
         userService.addManufacture(manufacture);
-        userService.addProduct(products1);
         userService.addCustomer(customers);
         userService.addOrder(orders);
-
-
-
-
+        userService.addProduct(products3);
+        //userService.removeOrder(userService.findOrderById(1));
         }
 }

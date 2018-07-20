@@ -3,7 +3,6 @@ package ru.ncedu.dmdrozhzhin.action;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-
 import ru.ncedu.dmdrozhzhin.myDataBaseHibernate.Customers;
 import ru.ncedu.dmdrozhzhin.myDataBaseHibernate.Manufacture;
 import ru.ncedu.dmdrozhzhin.myDataBaseHibernate.Orders;
@@ -14,7 +13,7 @@ public class MyHibernateSessionFactoryUtill {
     private static SessionFactory sessionFactory;
 
 
-    private MyHibernateSessionFactoryUtill(){
+    private MyHibernateSessionFactoryUtill() {
 
     }
 
@@ -31,8 +30,7 @@ public class MyHibernateSessionFactoryUtill {
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Exception" + e);
             }
 

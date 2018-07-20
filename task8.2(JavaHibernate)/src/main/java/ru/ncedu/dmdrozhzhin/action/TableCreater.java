@@ -18,7 +18,6 @@ public class TableCreater {
         SchemaExport export = new SchemaExport();
         File outputFile = new File(SCRIPT_FILE);
         String outputFilePath = outputFile.getAbsolutePath();
-
         export.setDelimiter(";");
         export.setOutputFile(outputFilePath);
         export.setHaltOnError(false);
@@ -30,13 +29,14 @@ public class TableCreater {
         // TargetType.DATABASE - Execute on Databse
         // TargetType.SCRIPT - Write Script file.
         // TargetType.STDOUT - Write log to Console.
-        EnumSet<TargetType>  targetTypes = EnumSet.of
+        EnumSet<TargetType> targetTypes = EnumSet.of
                 (TargetType.DATABASE, TargetType.SCRIPT, TargetType.STDOUT);
         SchemaExport.Action action = SchemaExport.Action.CREATE;
         export.execute(targetTypes, action, metadata);
         System.out.println("Export OK");
     }
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         String configFileName = "hibernate.cfg.xml";
 
         ServiceRegistry serviceRegistry =
@@ -47,7 +47,7 @@ public class TableCreater {
 
         SchemaExport export = getSchemaExport();
         System.out.println("Create Database...");
-        createDataBase(export,metadata);
+        createDataBase(export, metadata);
 
         serviceRegistry.close();
     }
